@@ -24,18 +24,15 @@ function changeColorPicker(picker) {
         selectedPath.style.fill = color;
         selectedPath.style.stroke = "none";
 
-
+        // Récupérer et afficher la vidéo
         const video = document.getElementById("color-animation");
-        if (video.readyState >= 2) {
-            video.style.zIndex = "20";
-            video.style.display = "block";
-            video.currentTime = 0;
+        video.classList.remove("hidden"); // Afficher la vidéo
+        video.currentTime = 0; // Recommencer depuis le début
+        video.play();
 
-            video.onended = () => {
-                video.style.display = "none";
-            };
-        } else {
-            console.log("Vidéo non prête, chargement en cours...");
-        }
+        // Masquer la vidéo après la lecture
+        video.onended = () => {
+            video.classList.add("hidden");
+        };
     }
 }
