@@ -97,7 +97,19 @@ h1 {
     display: block;
 }
 
+#color-animation {
+    position: absolute;
+    z-index: 3;
+    display: none; 
+}
 
+#color-animation.hidden {
+    display: none;
+}
+
+#color-animation:not(.hidden) {
+    display: block;
+}
 
 .product-shape {
     fill: #aaa; 
