@@ -24,17 +24,15 @@ function changeColorPicker(picker) {
         selectedPath.style.fill = color;
         selectedPath.style.stroke = "none";
 
-        // Récupérer la vidéo
-        const video = document.getElementById("color-animation");
 
-        // S'assurer que la vidéo est bien chargée
-        if (video.readyState >= 2) { // Vérifie si elle est prête à être lue
-            video.classList.remove("hidden"); // Afficher la vidéo
-            video.currentTime = 0; // Revenir au début
-            video.play();
-            video.style.display = "block"; // Afficher la vidéo
+        const video = document.getElementById("color-animation");
+        if (video.readyState >= 2) {
+            video.style.zIndex = "20";
+            video.style.display = "block";
+            video.currentTime = 0;
+
             video.onended = () => {
-                video.style.display = "none"; // Masquer après lecture
+                video.style.display = "none";
             };
         } else {
             console.log("Vidéo non prête, chargement en cours...");
