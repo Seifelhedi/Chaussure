@@ -24,15 +24,20 @@ function changeColorPicker(picker) {
         selectedPath.style.fill = color;
         selectedPath.style.stroke = "none";
 
-        // Récupérer et afficher la vidéo
+        // Récupérer la vidéo
         const video = document.getElementById("color-animation");
-        video.classList.remove("hidden"); // Afficher la vidéo
-        video.currentTime = 0; // Recommencer depuis le début
-        video.play();
 
-        // Masquer la vidéo après la lecture
-        video.onended = () => {
-            video.classList.add("hidden");
-        };
+        // S'assurer que la vidéo est bien chargée
+        if (video.readyState >= 2) { // Vérifie si elle est prête à être lue
+            video.classList.remove("hidden"); // Afficher la vidéo
+            video.currentTime = 0; // Revenir au début
+            video.play();
+            video.style.display = "block"; // Afficher la vidéo
+            video.onended = () => {
+                video.style.display = "none"; // Masquer après lecture
+            };
+        } else {
+            console.log("Vidéo non prête, chargement en cours...");
+        }
     }
 }
