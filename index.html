@@ -18,7 +18,7 @@
                 <button class="bg-red-600 text-white py-3 px-6 rounded-lg text-xl hover:bg-red-700 transition duration-300">Acheter maintenant</button>
             </div>
             <div id="container" class="relative w-2/3">
-                <video id="color-animation" class="hidden" autoplay muted>
+                <video id="color-animation" class="absolute inset-0 w-full h-full object-cover opacity-100 hidden" autoplay muted playsinline>
                     <source src="Main Scene.webm" type="video/webm">
                 </video>
                 <svg id="product-svg" class="w-full h-auto z-2" viewBox="0 0 1500 1200">
@@ -36,9 +36,6 @@
         <input class="jscolor bg-red-600 text-white py-2 px-4 rounded-lg text-lg cursor-pointer hover:bg-red-700 transition duration-300 ease-in-out" value="ff7f00" onchange="changeColorPicker(this)" />
     </div>
     
-    
-    
-
     <script src="script.js"></script>
 </body>
 </html>
