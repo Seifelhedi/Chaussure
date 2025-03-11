@@ -1,44 +1,17 @@
+import { DotLottie } from "https://cdn.jsdelivr.net/npm/@lottiefiles/dotlottie-web/+esm";
+
 let selectedPath = null;
 const paths = document.querySelectorAll(".product-shape");
-const lottieContainer = document.getElementById("lottie");
-const animation = bodymovin.loadAnimation({
-    container: lottieContainer,
-    path: "myAnimation.json", // Remplace par ton fichier JSON
-    renderer: "svg",
-    loop: false, // On ne boucle pas, une seule fois
+const animationCanvas = document.getElementById("animation-canvas");
+
+// Charger l’animation Lottie
+const lottie = new DotLottie({
     autoplay: false,
+    loop: false,
+    canvas: animationCanvas,
+    src: "https://lottie.host/YOUR_ANIMATION_ID.lottie" // Remplace avec ton URL Lottie
 });
 
-// Ajouter un effet au survol du SVG
-const svgElement = document.getElementById("product-svg");
-svgElement.addEventListener("mouseover", () => {
-    animation.goToAndPlay(0, true); // Joue l'animation depuis le début
-});
-
-// Arrêter après la lecture complète
-animation.addEventListener("complete", function () {
-    animation.stop();
-});
-
-// Si tu veux aussi la vidéo WebM en plus de Lottie :
-function changeColorPicker(picker) {
-    if (selectedPath) {
-        const color = `#${picker.value}`;
-        selectedPath.style.fill = color;
-        selectedPath.style.stroke = "none";
-
-        // Afficher la vidéo en plus de Lottie
-        const video = document.getElementById("color-animation");
-        video.style.display = "block";
-        video.currentTime = 0;
-        video.play();
-
-        // Cacher après la lecture
-        video.onended = () => {
-            video.style.display = "none";
-        };
-    }
-}
 // Ajouter un écouteur d'événement pour chaque path
 paths.forEach(path => {
     path.addEventListener("click", function() {
@@ -46,6 +19,7 @@ paths.forEach(path => {
         if (selectedPath) {
             selectedPath.classList.remove("selected");
         }
+
         // Sélectionner le nouveau path
         selectedPath = this;
         selectedPath.classList.add("selected");
@@ -62,18 +36,25 @@ function changeColorPicker(picker) {
         selectedPath.style.fill = color;
         selectedPath.style.stroke = "none";
 
+        // Afficher l'animation Lottie
+        animationCanvas.classList.remove("hidden");
 
-        const video = document.getElementById("color-animation");
-        if (video.readyState >= 2) {
-            video.style.zIndex = "20";
-            video.style.display = "block";
-            video.currentTime = 0;
+        // Récupérer la position de l'élément cliqué
+        const rect = selectedPath.getBoundingClientRect();
+        const containerRect = document.getElementById("container").getBoundingClientRect();
 
-            video.onended = () => {
-                video.style.display = "none";
-            };
-        } else {
-            console.log("Vidéo non prête, chargement en cours...");
-        }
+        // Placer le canvas sur la zone cliquée
+        animationCanvas.style.left = `${rect.left - containerRect.left}px`;
+        animationCanvas.style.top = `${rect.top - containerRect.top}px`;
+        animationCanvas.style.width = `${rect.width}px`;
+        animationCanvas.style.height = `${rect.height}px`;
+
+        // Jouer l’animation
+        lottie.play();
+
+        // Cacher l'animation après 2 secondes
+        setTimeout(() => {
+            animationCanvas.classList.add("hidden");
+        }, 2000);
     }
 }
