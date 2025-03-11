@@ -20,8 +20,19 @@ paths.forEach(path => {
 
 function changeColorPicker(picker) {
     if (selectedPath) {
-        const color = `#${picker.value}`;  // Utiliser picker.value pour obtenir la couleur hexadécimale
-        selectedPath.style.fill = color;   // Changer la couleur de remplissage
-        selectedPath.style.stroke = "none"; // Assurer qu'il n'y a pas de bordure
+        const color = `#${picker.value}`;
+        selectedPath.style.fill = color;
+        selectedPath.style.stroke = "none";
+
+        // Récupérer et afficher la vidéo
+        const video = document.getElementById("color-animation");
+        video.classList.remove("hidden"); // Afficher la vidéo
+        video.currentTime = 0; // Recommencer depuis le début
+        video.play();
+
+        // Masquer la vidéo après la lecture
+        video.onended = () => {
+            video.classList.add("hidden");
+        };
     }
 }
