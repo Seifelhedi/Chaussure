@@ -109,3 +109,7 @@ h1 {
     stroke: #000; 
     fill: #555;
 }
+
+.hidden {
+    display: none;
+}
